@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
+/*
+  Bella Cucina — warm trattoria design system.
+  Kierunek: rustykalna elegancja (ciepłe, apetyczne kolory).
+*/
+
+@theme {
+  /* Base surfaces */
+  --color-cream: #fbf7f0; /* główne tło — ciepły papier */
+  --color-cream-deep: #f3ead9; /* sekcje naprzemienne */
+  --color-surface: #fffdf8; /* karty */
+
+  /* Brand */
+  --color-terracotta: #b23a1e; /* primary — pomidor/glina */
+  --color-terracotta-dark: #8c2c13;
+  --color-olive: #3a4a2f; /* secondary — bazylia/oliwka */
+  --color-olive-light: #5c6e45;
+  --color-gold: #c99a4b; /* akcent — złoto/ochra */
+  --color-gold-soft: #e3c98f;
+
+  /* Ink */
+  --color-espresso: #211712; /* tekst główny */
+  --color-espresso-soft: #4a3a2e;
+  --color-muted: #7c6c5b; /* tekst drugorzędny */
+
+  /* Fonts (wired in layout.tsx via next/font) */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layout */
+  --container-content: 80rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --background: var(--color-cream);
+  --foreground: var(--color-espresso);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    border-color: color-mix(in srgb, var(--color-espresso) 12%, transparent);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    scroll-behavior: smooth;
+    /* offset dla sticky-navu przy kotwicach */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-espresso);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-espresso);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-espresso);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* płynne anchor-scroll, ale z poszanowaniem preferencji */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Sekcyjny "eyebrow" — mała etykieta nad nagłówkiem */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+  .eyebrow--center::after {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background-color: currentColor;
+  }
+
+  /* Dekoracyjna linia "menu leader" — kropki między nazwą a ceną */
+  .leader {
+    flex: 1 1 auto;
+    margin: 0 0.75rem;
+    border-bottom: 1.5px dotted color-mix(in srgb, var(--color-espresso) 28%, transparent);
+    transform: translateY(-0.28em);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Subtelne tło "papieru" dla ciepłych sekcji */
+@utility bg-paper {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(
+      circle at 1px 1px,
+      color-mix(in srgb, var(--color-espresso) 4%, transparent) 1px,
+      transparent 0
+    );
+  background-size: 22px 22px;
 }

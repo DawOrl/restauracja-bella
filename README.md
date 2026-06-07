@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bella Cucina — trattoria włoska (demo portfolio)
 
-## Getting Started
+Strona one-page dla rodzinnej włoskiej restauracji. Demo do portfolio
+(`dorlowski.dev`, slug: `restauracja-bella`) pokazujące kompetencje w tworzeniu
+stron dla gastronomii: apetyczne hero, menu online, galeria z lightboxem,
+rezerwacja stolika, mapa i dane strukturalne pod SEO.
 
-First, run the development server:
+**Kierunek UI/UX:** „ciepła trattoria" — rustykalna elegancja. Paleta krem /
+terakota / oliwka / złoto, typografia Fraunces (display) + Inter (tekst),
+delikatne animacje wejścia z poszanowaniem `prefers-reduced-motion`.
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack) · **React 19** · **TypeScript**
+- **Tailwind CSS v4** (design tokens w `@theme`)
+- **Framer Motion** (animacje)
+- Hosting docelowy: **Vercel**
+
+## Uruchomienie
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # produkcyjny build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Struktura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    layout.tsx            # metadata, fonty, <html lang="pl">
+    page.tsx              # złożenie sekcji + JSON-LD
+    globals.css           # design system (Tailwind v4 @theme)
+    api/rezerwacja/route.ts  # obsługa formularza (demo)
+    opengraph-image.tsx   # dynamiczny OG image
+    sitemap.ts / robots.ts
+    icon.svg
+  components/             # Header, Hero, About, MenuSection, MenuNav,
+                          # Gallery, Reservation(+Form), Contact, Footer
+  data/
+    restaurant.ts         # jedno źródło prawdy o lokalu (kontakt, godziny…)
+    menu.ts               # karta dań (łatwa edycja)
+    images.ts             # statyczne importy zdjęć (auto blur/rozmiar)
+  images/                 # zdjęcia (źródło: Pexels, licencja darmowa)
+  lib/                    # cn, formatPrice, motion EASE, schema.org builder
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Jak aktualizować treść
 
-## Learn More
+- **Menu:** edytuj `src/data/menu.ts` — sekcje, ceny i tagi diet aktualizują
+  się w UI oraz w danych strukturalnych `schema.org/Menu`.
+- **Dane lokalu** (adres, telefon, godziny, social, mapa): `src/data/restaurant.ts`.
+- **Zdjęcia:** podmień pliki w `src/images/` (statyczny import → automatyczny
+  `width`/`height` i `blurDataURL`).
 
-To learn more about Next.js, take a look at the following resources:
+## Rezerwacja
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Formularz waliduje dane po stronie klienta i serwera (`/api/rezerwacja`),
+ma honeypot anty-spam i stan sukcesu. W demo zgłoszenie jest logowane na
+serwerze — produkcyjnie wystarczy podpiąć Web3Forms/Resend w handlerze
+(miejsce oznaczone komentarzem).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## SEO
 
-## Deploy on Vercel
+- Pełne `metadata` + OpenGraph/Twitter, `lang="pl"`, dynamiczny OG image.
+- Dane strukturalne `schema.org/Restaurant` (+ `Menu`, godziny, geo) w `page.tsx`.
+- `sitemap.xml`, `robots.txt`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Zdjęcia
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Wszystkie zdjęcia pochodzą z [Pexels](https://pexels.com) (licencja darmowa,
+do użytku komercyjnego, bez wymaganej atrybucji).
