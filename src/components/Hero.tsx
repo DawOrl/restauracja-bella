@@ -67,7 +67,7 @@ export function Hero() {
         </div>
 
         <div className="order-first px-5 pt-[calc(var(--header-h)+0.25rem)] sm:px-8 lg:order-none lg:col-span-6 lg:pb-5 lg:pl-0 lg:pr-5">
-          <div className="arch relative mx-auto h-[46svh] min-h-[19rem] w-full max-w-xl animate-unveil overflow-hidden bg-espresso [animation-delay:150ms] sm:h-[60svh] lg:h-full lg:max-h-none lg:max-w-none">
+          <div className="arch relative mx-auto h-[46svh] min-h-[19rem] w-full animate-unveil overflow-hidden bg-espresso [animation-delay:150ms] sm:h-[58svh] lg:h-full">
             <Image
               src={heroImage.src}
               alt={heroImage.alt}
@@ -75,7 +75,7 @@ export function Hero() {
               preload
               quality={85}
               placeholder="blur"
-              sizes="(min-width: 1024px) 50vw, (min-width: 640px) 576px, 100vw"
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover object-[50%_70%]"
             />
           </div>

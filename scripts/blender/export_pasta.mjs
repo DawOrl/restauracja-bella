@@ -20,8 +20,23 @@ for (let i = 0; i < data.length; i += info.channels) {
   }
 }
 const cleaned = await sharp(data, { raw: info }).png().toBuffer();
-const trimmed = await sharp(cleaned).trim({ threshold: 1 }).toBuffer();
-const out = await sharp(trimmed)
+const trimmed = await sharp(cleaned).trim({ threshold: 1 }).raw().toBuffer({ resolveWithObject: true });
+
+// Render ucina cień na krawędzi kadru, więc przy brzegach cień (tylko cień,
+// nie makaron) wygasa łagodnie: brak twardej krawędzi obrazka na tle strony.
+const { data: td, info: ti } = trimmed;
+const margin = Math.round(Math.min(ti.width, ti.height) * 0.14);
+const smooth = (t) => t * t * (3 - 2 * t);
+for (let y = 0; y < ti.height; y++) {
+  for (let x = 0; x < ti.width; x++) {
+    const i = (y * ti.width + x) * ti.channels;
+    const lum = (0.2126 * td[i] + 0.7152 * td[i + 1] + 0.0722 * td[i + 2]) / 255;
+    if (td[i + 3] === 0 || lum >= 0.06) continue;
+    const d = Math.min(x, y, ti.width - 1 - x, ti.height - 1 - y);
+    if (d < margin) td[i + 3] = Math.round(td[i + 3] * smooth(d / margin));
+  }
+}
+const out = await sharp(td, { raw: ti })
   .resize({ width: 1100, withoutEnlargement: true })
   .webp({ quality: 86, alphaQuality: 90 })
   .toFile(dst);

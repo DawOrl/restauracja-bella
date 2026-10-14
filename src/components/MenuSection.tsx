@@ -17,7 +17,7 @@ export function MenuSection() {
       className="relative bg-cream-deep bg-grain pb-24 pt-20 sm:pb-32 sm:pt-28"
     >
       <div className="mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-20">
-        <div className="grid items-end gap-8 lg:grid-cols-12">
+        <div className="relative grid items-end gap-8 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
             <p className="kicker">La carta</p>
             <h2 className="mt-4 font-display text-[3.5rem] leading-[0.95] text-espresso sm:text-8xl">
@@ -29,16 +29,15 @@ export function MenuSection() {
             </p>
           </Reveal>
           <Reveal
-            className="relative -mb-6 hidden sm:block lg:col-span-5"
+            className="pointer-events-none absolute -top-2 right-0 w-[46%] sm:pointer-events-auto sm:relative sm:top-auto sm:-mb-6 sm:w-auto lg:col-span-5"
             delay={0.1}
             y={40}
           >
             <Image
               src={pastaRender}
               alt=""
-              placeholder="blur"
-              sizes="(min-width: 1024px) 34vw, 60vw"
-              className="ml-auto h-auto w-[78%] max-w-[30rem] mix-blend-multiply"
+              sizes="(min-width: 1024px) 34vw, (min-width: 640px) 60vw, 46vw"
+              className="ml-auto h-auto w-full max-w-[30rem] sm:w-[78%]"
             />
           </Reveal>
         </div>
@@ -93,7 +92,7 @@ export function MenuSection() {
                   </Reveal>
 
                   {photo && (
-                    <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-[0.75rem] bg-espresso lg:hidden">
+                    <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-[0.75rem] bg-espresso sm:aspect-[16/9] lg:hidden">
                       <Image
                         src={photo.src}
                         alt={photo.alt}
