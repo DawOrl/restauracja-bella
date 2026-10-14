@@ -1,8 +1,8 @@
 /**
  * Karta Bella Cucina.
- * Edytujesz tutaj — sekcja "Menu" i dane strukturalne aktualizują się same.
- * Zdjęcie pozycji podpina się automatycznie po `id` (zob. `menuImages`
- * w `src/data/images.ts`) — plik `src/images/menu/<id>.jpg`.
+ * Edytujesz tutaj: sekcja "Menu" i dane strukturalne aktualizują się same.
+ * Każda kategoria ma jedno zdjęcie (zob. `menuCategoryImages` w
+ * `src/data/images.ts`, klucz = `MenuCategory.id`).
  */
 
 export type DietTag = "wege" | "ostre" | "bezglutenowe" | "ryba" | "polecane";
@@ -14,13 +14,13 @@ export type MenuItem = {
   /** cena w PLN */
   price: number;
   tags?: DietTag[];
-  /** wyróżniona pozycja (np. „polecane") — flaga danych */
+  /** wyróżniona pozycja (np. „polecane”): flaga danych */
   featured?: boolean;
 };
 
 export type MenuCategory = {
   id: string;
-  /** nazwa włoska — duży nagłówek */
+  /** nazwa włoska: duży nagłówek */
   name: string;
   /** podtytuł po polsku */
   subtitle: string;
@@ -34,7 +34,7 @@ export const menu: MenuCategory[] = [
     id: "antipasti",
     name: "Antipasti",
     subtitle: "Przystawki",
-    blurb: "Na dobry początek — to, czym dzielimy się przy stole.",
+    blurb: "Na dobry początek: to, czym dzielimy się przy stole.",
     items: [
       {
         id: "bruschette",
@@ -190,7 +190,7 @@ export const menu: MenuCategory[] = [
         id: "branzino",
         name: "Branzino al forno",
         description:
-          "Pieczona labraks z cytryną, ziołami i pieczonymi ziemniakami.",
+          "Pieczony labraks z cytryną, ziołami i pieczonymi ziemniakami.",
         price: 68,
         tags: ["ryba", "bezglutenowe"],
       },
@@ -244,7 +244,7 @@ export const menu: MenuCategory[] = [
       {
         id: "gelato",
         name: "Gelato artigianale",
-        description: "Domowe lody rzemieślnicze — zapytaj o smaki dnia.",
+        description: "Domowe lody rzemieślnicze. Zapytaj o smaki dnia.",
         price: 18,
         tags: ["wege", "bezglutenowe"],
       },
@@ -259,7 +259,7 @@ export const menu: MenuCategory[] = [
       {
         id: "vino-rosso",
         name: "Vino della casa (rosso / bianco)",
-        description: "Wino domowe — kieliszek / karafka 0,5 l.",
+        description: "Wino domowe: kieliszek / karafka 0,5 l.",
         price: 18,
       },
       {
@@ -297,7 +297,7 @@ export const menu: MenuCategory[] = [
   },
 ];
 
-/** Liczba osób do selecta rezerwacji itp. — pomocnicze */
+/** Etykiety tagów diet do wyświetlenia przy pozycjach karty. */
 export const dietTagLabels: Record<DietTag, string> = {
   wege: "Wege",
   ostre: "Ostre",

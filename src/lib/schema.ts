@@ -17,7 +17,7 @@ export function buildRestaurantJsonLd(imageUrls: string[]) {
 
   const hasMenu = {
     "@type": "Menu",
-    name: `Menu — ${restaurant.name}`,
+    name: `Menu: ${restaurant.name}`,
     hasMenuSection: menu.map((section) => ({
       "@type": "MenuSection",
       name: `${section.name} (${section.subtitle})`,

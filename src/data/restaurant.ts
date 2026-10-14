@@ -1,5 +1,5 @@
 /**
- * Bella Cucina — jedno źródło prawdy o lokalu.
+ * Bella Cucina: jedno źródło prawdy o lokalu.
  * Używane przez UI, metadane SEO oraz dane strukturalne schema.org.
  * Aktualizujesz tutaj, zmienia się wszędzie.
  */
@@ -23,7 +23,7 @@ export const restaurant = {
   heroLead: "Domowa kuchnia włoska w sercu Krakowa",
   /** opisy używane w meta i schema */
   shortDescription:
-    "Rodzinna trattoria w Krakowie — świeży makaron robiony codziennie, pizza z pieca opalanego drewnem i karta win prosto z Italii.",
+    "Rodzinna trattoria w Krakowie: świeży makaron robiony codziennie, pizza z pieca opalanego drewnem i karta win prosto z Italii.",
   longDescription:
     "Bella Cucina to rodzinna trattoria, w której od 1987 roku gotujemy tak, jak we włoskim domu. Makaron wyrabiamy ręcznie każdego ranka, pizzę wypiekamy w piecu opalanym drewnem, a składniki sprowadzamy wprost od włoskich dostawców. Usiądź, nalej wina i poczuj się jak u nas w rodzinie.",
 
@@ -59,11 +59,13 @@ export const restaurant = {
     embedUrl:
       "https://maps.google.com/maps?q=Floria%C5%84ska%2024%20Krak%C3%B3w&t=&z=15&ie=UTF8&iwloc=&output=embed",
     linkUrl: "https://www.google.com/maps/search/?api=1&query=Floria%C5%84ska+24+Krak%C3%B3w",
+    directionsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Floria%C5%84ska+24+Krak%C3%B3w",
   },
 
   hours: [
-    { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], label: "Poniedziałek – Czwartek", opens: "12:00", closes: "22:00" },
-    { days: ["Friday", "Saturday"], label: "Piątek – Sobota", opens: "12:00", closes: "23:00" },
+    { days: ["Monday", "Tuesday", "Wednesday", "Thursday"], label: "Poniedziałek–czwartek", opens: "12:00", closes: "22:00" },
+    { days: ["Friday", "Saturday"], label: "Piątek–sobota", opens: "12:00", closes: "23:00" },
     { days: ["Sunday"], label: "Niedziela", opens: "12:00", closes: "21:00" },
   ] satisfies OpeningHours[],
 
@@ -73,7 +75,7 @@ export const restaurant = {
     facebook: "https://facebook.com/bellacucina",
   },
 
-  /** publiczny URL wdrożenia (Vercel) — do metadata/OG/sitemap */
+  /** publiczny URL wdrożenia (Vercel): do metadata/OG/sitemap */
   siteUrl: "https://restauracja-bella.vercel.app",
 } as const;
 

@@ -17,7 +17,7 @@ type Payload = {
   time?: string;
   guests?: string;
   message?: string;
-  /** honeypot — ma być puste */
+  /** honeypot: ma być puste */
   company?: string;
 };
 
