@@ -46,7 +46,7 @@ export function Reservation() {
           className="lg:col-span-7 lg:col-start-6 xl:col-span-6 xl:col-start-7"
           delay={0.1}
         >
-          <div className="rounded-[1rem] bg-surface p-6 text-espresso shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] sm:p-10">
+          <div className="rounded-[1rem] bg-surface p-6 text-espresso sm:p-10">
             <ReservationForm />
           </div>
         </Reveal>

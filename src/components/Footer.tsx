@@ -11,7 +11,7 @@ const links = [
 export function Footer() {
   const { address, contact, social } = restaurant;
   return (
-    <footer className="bg-espresso pb-12 text-cream/75">
+    <footer className="relative -mt-px bg-espresso pb-12 text-cream/75">
       <div className="mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-20">
         <div className="border-t border-cream/15 pt-14">
           <p className="font-display text-[3.4rem] leading-[0.9] tracking-tight text-cream sm:text-[6rem] lg:text-[8.5rem]">

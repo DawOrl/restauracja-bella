@@ -50,7 +50,7 @@ export function Contact() {
               <h3 className="font-display text-xl text-espresso">
                 Godziny otwarcia
               </h3>
-              <div className="mt-4 text-base">
+              <div className="mt-4">
                 <HoursList />
               </div>
             </div>

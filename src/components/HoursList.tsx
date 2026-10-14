@@ -20,13 +20,14 @@ export function HoursList({ tone = "dark" }: { tone?: "dark" | "light" }) {
   );
 
   return (
-    <ul className="space-y-3">
+    <ul className="space-y-3 text-[0.94rem] sm:text-base">
       {restaurant.hours.map((h) => {
         const isToday = h.label === todayLabel;
         return (
           <li key={h.label} className="flex items-baseline">
             <span
               className={cn(
+                "min-[360px]:whitespace-nowrap",
                 tone === "dark" ? "text-espresso-soft" : "text-cream/75",
                 isToday &&
                   (tone === "dark"

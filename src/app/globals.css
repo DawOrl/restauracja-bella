@@ -144,6 +144,7 @@
     line-height: 1.2;
     font-variation-settings: "SOFT" 100, "WONK" 1;
     color: var(--color-terracotta);
+    text-wrap: balance;
   }
 
   /* Akcent w nagłówkach: kursywa z osią WONK */

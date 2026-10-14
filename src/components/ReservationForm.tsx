@@ -148,7 +148,7 @@ export function ReservationForm() {
   if (status === "success") {
     return (
       <div
-        className="flex min-h-[28rem] flex-col items-start justify-center"
+        className="flex min-h-[22rem] flex-col items-start justify-center sm:min-h-[28rem]"
         role="status"
       >
         <p className="kicker">Grazie</p>
