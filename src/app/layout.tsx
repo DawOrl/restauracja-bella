@@ -3,20 +3,23 @@ import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import { restaurant } from "@/data/restaurant";
 
+// Fraunces: szeryf o "miękkich" osiach (SOFT, WONK) daje ciepły, odręczny
+// charakter starej karty dań; latin-ext jest konieczne dla polskich znaków.
 const fraunces = Fraunces({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-fraunces",
   display: "swap",
   style: ["normal", "italic"],
+  axes: ["opsz", "SOFT", "WONK"],
 });
 
 const inter = Inter({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
   display: "swap",
 });
 
-const title = `${restaurant.name} — Trattoria włoska w ${restaurant.address.city}`;
+const title = `${restaurant.name}: trattoria włoska w ${restaurant.address.city}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(restaurant.siteUrl),
@@ -78,6 +81,12 @@ export default function RootLayout({
   return (
     <html lang="pl" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="min-h-dvh bg-cream text-espresso antialiased">
+        <a
+          href="#tresc"
+          className="sr-only z-100 rounded-md bg-espresso px-4 py-3 text-sm font-semibold text-cream focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Przejdź do treści
+        </a>
         {children}
       </body>
     </html>

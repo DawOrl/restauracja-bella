@@ -1,110 +1,86 @@
-"use client";
-
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { heroImage } from "@/data/images";
-import { EASE } from "@/lib/motion";
+import { restaurant } from "@/data/restaurant";
+import { earliestOpening } from "@/lib/hours";
 
+/*
+  Edytorski hero: typografia na kremowym papierze po lewej, zdjęcie w łuku po
+  prawej. Łuk powtarza ceglane sklepienie widoczne na fotografii, a całość
+  przypomina okładkę karty dań, nie szablon "tekst na ciemnym zdjęciu".
+*/
 export function Hero() {
-  const reduce = useReducedMotion();
-
-  const container: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: reduce ? 0 : 0.12, delayChildren: 0.1 } },
-  };
-  const item: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 26 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: reduce ? 0 : 0.8, ease: EASE },
-    },
-  };
-
   return (
-    <section
-      id="top"
-      className="relative flex min-h-dvh items-center justify-center overflow-hidden"
-    >
-      {/* Tło */}
-      <Image
-        src={heroImage}
-        alt="Wnętrze trattorii Bella Cucina o zmierzchu"
-        fill
-        priority
-        placeholder="blur"
-        sizes="100vw"
-        className="object-cover"
-      />
-      {/* Warstwy przyciemnienia dla czytelności */}
-      <div className="absolute inset-0 bg-linear-to-b from-espresso/70 via-espresso/45 to-espresso/80" />
-      <div className="absolute inset-0 bg-linear-to-t from-espresso/60 to-transparent" />
+    <section id="top" className="relative overflow-hidden">
+      <div className="mx-auto grid max-w-[90rem] lg:min-h-dvh lg:grid-cols-12">
+        <div className="flex flex-col px-5 pb-14 pt-8 sm:px-8 lg:col-span-6 lg:pb-5 lg:pl-12 lg:pr-6 lg:pt-[calc(var(--header-h)+2rem)] xl:pl-20">
+          <div className="lg:my-auto lg:pb-10">
+            <p className="kicker animate-rise [animation-delay:100ms]">
+              Trattoria familijna w Krakowie, od {restaurant.foundedYear} roku
+            </p>
 
-      {/* Treść */}
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="visible"
-        className="relative z-10 mx-auto max-w-4xl px-5 text-center text-cream sm:px-8"
-      >
-        <motion.p
-          variants={item}
-          className="eyebrow eyebrow--center text-gold-soft!"
-        >
-          Trattoria familijna · Kraków
-        </motion.p>
+            <h1 className="mt-4 max-w-full font-display text-[3.1rem] leading-[0.95] text-espresso sm:text-7xl lg:mt-5 lg:text-[4.9rem] xl:text-[5.6rem]">
+              <span className="block animate-rise [animation-delay:200ms]">
+                Prawdziwa Italia
+              </span>
+              <span className="accent block animate-rise text-terracotta [animation-delay:320ms]">
+                na Twoim talerzu
+              </span>
+            </h1>
 
-        <motion.h1
-          variants={item}
-          className="mt-6 font-display text-5xl leading-[1.05] text-cream sm:text-6xl md:text-7xl lg:text-[5.5rem]"
-        >
-          Prawdziwa Italia
-          <br />
-          <span className="italic text-gold">na Twoim talerzu</span>
-        </motion.h1>
+            <p className="mt-7 max-w-[34rem] animate-rise text-lg leading-relaxed text-espresso-soft [animation-delay:440ms] sm:text-xl">
+              Makaron wyrabiany każdego ranka, pizza z pieca opalanego drewnem i
+              wina prosto z Włoch. Przy Floriańskiej, kilka kroków od Rynku.
+            </p>
 
-        <motion.p
-          variants={item}
-          className="mx-auto mt-7 max-w-xl text-base leading-relaxed text-cream/85 sm:text-lg"
-        >
-          Świeży makaron wyrabiany codziennie, pizza z pieca opalanego drewnem i
-          wina prosto z Włoch — w sercu Krakowa od 1987 roku.
-        </motion.p>
+            <div className="mt-9 flex animate-rise flex-wrap items-center gap-x-7 gap-y-4 [animation-delay:560ms]">
+              <a
+                id="hero-cta"
+                href="#rezerwacja"
+                className="rounded-full bg-terracotta px-7 py-4 text-base font-semibold text-cream shadow-[0_10px_24px_-12px_rgba(140,44,19,0.7)] transition-colors duration-200 hover:bg-terracotta-dark active:translate-y-px"
+              >
+                Zarezerwuj stolik
+              </a>
+              <a
+                href="#menu"
+                className="group inline-flex min-h-11 items-center text-base font-semibold text-espresso underline decoration-terracotta/50 decoration-2 underline-offset-[6px] transition-colors hover:decoration-terracotta"
+              >
+                Zobacz kartę dań
+              </a>
+            </div>
+          </div>
 
-        <motion.div
-          variants={item}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <a
-            href="#rezerwacja"
-            className="w-full rounded-full bg-terracotta px-8 py-4 text-base font-semibold text-cream shadow-lg transition-all duration-300 hover:bg-terracotta-dark hover:shadow-xl sm:w-auto"
-          >
-            Zarezerwuj stolik
-          </a>
-          <a
-            href="#menu"
-            className="w-full rounded-full border border-cream/40 px-8 py-4 text-base font-semibold text-cream backdrop-blur-sm transition-all duration-300 hover:border-cream hover:bg-cream/10 sm:w-auto"
-          >
-            Zobacz menu
-          </a>
-        </motion.div>
-      </motion.div>
+          <dl className="mt-10 grid lg:mt-12 max-w-[34rem] animate-rise grid-cols-2 gap-x-6 gap-y-1 border-t border-espresso/15 pt-5 text-sm [animation-delay:680ms]">
+            <div>
+              <dt className="text-muted">Adres</dt>
+              <dd className="mt-1 font-medium text-espresso">
+                {restaurant.address.street.replace("ul. ", "")},{" "}
+                {restaurant.address.city}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-muted">Otwarte</dt>
+              <dd className="mt-1 font-medium text-espresso">
+                codziennie od {earliestOpening()}
+              </dd>
+            </div>
+          </dl>
+        </div>
 
-      {/* Wskaźnik scrolla */}
-      <motion.a
-        href="#o-nas"
-        aria-label="Przewiń w dół"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: reduce ? 1 : [0.4, 1, 0.4] }}
-        transition={
-          reduce ? undefined : { repeat: Infinity, duration: 2.2, ease: "easeInOut" }
-        }
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-cream/80"
-      >
-        <span className="flex h-10 w-6 items-start justify-center rounded-full border border-cream/50 p-1.5">
-          <span className="h-2 w-1 rounded-full bg-cream/80" />
-        </span>
-      </motion.a>
+        <div className="order-first px-5 pt-[calc(var(--header-h)+0.25rem)] sm:px-8 lg:order-none lg:col-span-6 lg:pb-5 lg:pl-0 lg:pr-5">
+          <div className="arch relative mx-auto h-[46svh] min-h-[19rem] w-full max-w-xl animate-unveil overflow-hidden bg-espresso [animation-delay:150ms] sm:h-[60svh] lg:h-full lg:max-h-none lg:max-w-none">
+            <Image
+              src={heroImage.src}
+              alt={heroImage.alt}
+              fill
+              preload
+              quality={85}
+              placeholder="blur"
+              sizes="(min-width: 1024px) 50vw, (min-width: 640px) 576px, 100vw"
+              className="object-cover object-[50%_70%]"
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

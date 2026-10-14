@@ -1,118 +1,95 @@
 import { restaurant } from "@/data/restaurant";
 
-const quickLinks = [
+const links = [
   { href: "#o-nas", label: "O nas" },
   { href: "#menu", label: "Menu" },
   { href: "#galeria", label: "Galeria" },
+  { href: "#kontakt", label: "Dojazd" },
   { href: "#rezerwacja", label: "Rezerwacja" },
-  { href: "#kontakt", label: "Kontakt" },
 ];
 
 export function Footer() {
-  const year = 2026;
+  const { address, contact, social } = restaurant;
   return (
-    <footer className="bg-espresso text-cream/80">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Marka */}
-          <div className="lg:col-span-1">
-            <p className="font-display text-3xl text-cream">
-              Bella <span className="italic text-gold">Cucina</span>
-            </p>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/70">
-              {restaurant.shortDescription}
+    <footer className="bg-espresso pb-12 text-cream/75">
+      <div className="mx-auto max-w-[90rem] px-5 sm:px-8 lg:px-12 xl:px-20">
+        <div className="border-t border-cream/15 pt-14">
+          <p className="font-display text-[3.4rem] leading-[0.9] tracking-tight text-cream sm:text-[6rem] lg:text-[8.5rem]">
+            Bella <span className="accent text-gold-soft">Cucina</span>
+          </p>
+          <p className="mt-5 max-w-md text-base leading-relaxed">
+            {restaurant.shortDescription}
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-10 text-sm sm:grid-cols-3">
+          <div>
+            <h2 className="font-display text-lg text-cream">Adres</h2>
+            <p className="mt-3 leading-relaxed">
+              {address.street}
+              <br />
+              {address.postalCode} {address.city}
             </p>
           </div>
-
-          {/* Nawigacja */}
           <div>
-            <h3 className="font-display text-lg text-cream">Nawigacja</h3>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {quickLinks.map((l) => (
+            <h2 className="font-display text-lg text-cream">Kontakt</h2>
+            <ul className="mt-1">
+              <li>
+                <a
+                  href={`tel:${contact.phoneHref}`}
+                  className="inline-flex min-h-11 items-center tabular-nums hover:text-gold-soft"
+                >
+                  {contact.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="inline-flex min-h-11 items-center hover:text-gold-soft"
+                >
+                  {contact.email}
+                </a>
+              </li>
+              <li className="flex gap-5">
+                <a
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center hover:text-gold-soft"
+                >
+                  Instagram
+                </a>
+                <a
+                  href={social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center hover:text-gold-soft"
+                >
+                  Facebook
+                </a>
+              </li>
+            </ul>
+          </div>
+          <nav aria-label="Stopka">
+            <h2 className="font-display text-lg text-cream">Na stronie</h2>
+            <ul className="mt-1 grid grid-cols-2 gap-x-6">
+              {links.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-cream/70 transition-colors hover:text-gold"
+                    className="inline-flex min-h-11 items-center hover:text-gold-soft"
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Godziny */}
-          <div>
-            <h3 className="font-display text-lg text-cream">Godziny otwarcia</h3>
-            <ul className="mt-4 space-y-2.5 text-sm text-cream/70">
-              {restaurant.hours.map((h) => (
-                <li key={h.label} className="flex justify-between gap-4">
-                  <span>{h.label}</span>
-                  <span className="tabular-nums text-cream/90">
-                    {h.opens}–{h.closes}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Kontakt */}
-          <div>
-            <h3 className="font-display text-lg text-cream">Kontakt</h3>
-            <ul className="mt-4 space-y-2.5 text-sm text-cream/70">
-              <li>
-                {restaurant.address.street}
-                <br />
-                {restaurant.address.postalCode} {restaurant.address.city}
-              </li>
-              <li>
-                <a
-                  href={`tel:${restaurant.contact.phoneHref}`}
-                  className="transition-colors hover:text-gold"
-                >
-                  {restaurant.contact.phone}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${restaurant.contact.email}`}
-                  className="transition-colors hover:text-gold"
-                >
-                  {restaurant.contact.email}
-                </a>
-              </li>
-            </ul>
-            <div className="mt-4 flex gap-4">
-              <a
-                href={restaurant.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream/70 transition-colors hover:text-gold"
-                aria-label="Instagram"
-              >
-                Instagram
-              </a>
-              <a
-                href={restaurant.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream/70 transition-colors hover:text-gold"
-                aria-label="Facebook"
-              >
-                Facebook
-              </a>
-            </div>
-          </div>
+          </nav>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-cream/15 pt-7 text-xs text-cream/50 sm:flex-row">
-          <p>
-            © {year} {restaurant.legalName}. Wszystkie prawa zastrzeżone.
-          </p>
-          <p>
-            Projekt demo · Made with <span className="text-gold">♥</span> in
-            Kraków
-          </p>
+        <div className="mt-14 flex flex-col justify-between gap-2 border-t border-cream/15 pt-6 text-xs text-cream/55 sm:flex-row">
+          <p>© 2026 {restaurant.legalName}. Wszystkie prawa zastrzeżone.</p>
+          <p>Projekt demonstracyjny, lokal i dane kontaktowe są fikcyjne.</p>
         </div>
       </div>
     </footer>

@@ -5,81 +5,77 @@ import { restaurant } from "@/data/restaurant";
 
 const features = [
   {
-    title: "Świeży makaron codziennie",
-    text: "Wyrabiamy go ręcznie każdego ranka — nigdy z paczki.",
+    title: "Makaron",
+    text: "Wyrabiany ręcznie każdego ranka, nigdy z paczki.",
   },
   {
-    title: "Piec opalany drewnem",
-    text: "Pizza wypiekana w 450°C, gotowa w 90 sekund.",
+    title: "Piec",
+    text: "Opalany drewnem. Pizza piecze się w 450°C przez 90 sekund.",
   },
   {
-    title: "Składniki z Włoch",
-    text: "Pomidory San Marzano, oliwa i sery prosto od dostawców.",
+    title: "Składniki",
+    text: "Pomidory San Marzano, oliwa i sery prosto od włoskich dostawców.",
   },
 ];
 
 export function About() {
   return (
-    <section id="o-nas" className="bg-cream py-24 sm:py-32">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:gap-20">
-        {/* Zdjęcie z plakietką "od 1987" */}
-        <Reveal className="relative" y={32}>
-          <div className="relative aspect-4/5 overflow-hidden rounded-2xl shadow-xl">
-            <Image
-              src={aboutImage}
-              alt="Szef kuchni Bella Cucina przygotowuje świeży makaron"
-              fill
-              placeholder="blur"
-              sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-cover"
-            />
-          </div>
-          {/* dekoracyjna ramka */}
-          <div className="pointer-events-none absolute -inset-3 -z-10 rounded-2xl border border-gold/40" />
-          {/* plakietka */}
-          <div className="absolute -bottom-6 -right-4 flex h-28 w-28 flex-col items-center justify-center rounded-full bg-terracotta text-cream shadow-lg sm:-right-6">
-            <span className="font-display text-3xl leading-none">
-              {restaurant.foundedYear}
-            </span>
-            <span className="mt-1 text-[0.65rem] font-semibold uppercase tracking-widest">
-              od roku
-            </span>
-          </div>
+    <section id="o-nas" className="relative py-24 sm:py-32">
+      <div className="mx-auto grid max-w-[90rem] gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:px-12 xl:px-20">
+        <Reveal className="lg:col-span-5 lg:col-start-1">
+          <figure className="relative">
+            <div className="relative aspect-4/5 overflow-hidden rounded-[0.75rem]">
+              <Image
+                src={aboutImage.src}
+                alt={aboutImage.alt}
+                fill
+                placeholder="blur"
+                sizes="(min-width: 1024px) 38vw, 92vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="absolute -bottom-5 left-5 rounded-md bg-espresso px-4 py-3 text-cream sm:left-8">
+              <span className="block font-display text-2xl leading-none tabular-nums">
+                {restaurant.foundedYear}
+              </span>
+              <span className="mt-1 block text-xs text-cream/75">
+                gotujemy rodzinnie od tego roku
+              </span>
+            </figcaption>
+          </figure>
         </Reveal>
 
-        {/* Treść */}
-        <div>
+        <div className="lg:col-span-6 lg:col-start-7 lg:pt-10">
           <Reveal>
-            <p className="eyebrow">O nas</p>
-            <h2 className="mt-5 font-display text-4xl leading-tight sm:text-5xl">
-              Gotujemy tak, jak we{" "}
-              <span className="italic text-terracotta">włoskim domu</span>
+            <p className="kicker">Chi siamo</p>
+            <h2 className="mt-4 font-display text-[2.6rem] leading-[1.02] text-espresso sm:text-6xl">
+              Gotujemy tak, jak&nbsp;we{" "}
+              <span className="accent text-terracotta">włoskim domu</span>
             </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-espresso-soft sm:text-lg">
+            <div className="mt-8 max-w-[36rem] space-y-4 text-lg leading-relaxed text-espresso-soft">
               <p>
                 Bella Cucina to rodzinna trattoria, w której od{" "}
-                {restaurant.foundedYear} roku gotujemy z miłością i według
-                przepisów przekazywanych z pokolenia na pokolenie.
+                {restaurant.foundedYear} roku gotujemy według przepisów
+                przekazywanych z pokolenia na pokolenie.
               </p>
               <p>
-                Makaron wyrabiamy ręcznie, pizzę wypiekamy w piecu opalanym
-                drewnem, a składniki sprowadzamy wprost od włoskich dostawców.
-                Usiądź, nalej wina i poczuj się jak u nas w rodzinie.
+                Usiądź, nalej wina i poczuj się jak u nas w rodzinie. Resztą
+                zajmie się kuchnia.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <dl className="mt-10 grid gap-6 sm:grid-cols-3">
-              {features.map((f, i) => (
-                <div key={f.title} className="border-t border-espresso/15 pt-4">
-                  <span className="font-display text-2xl text-gold">
-                    0{i + 1}
-                  </span>
-                  <dt className="mt-2 font-semibold text-espresso">
+            <dl className="mt-12 max-w-[36rem] border-t border-espresso/15">
+              {features.map((f) => (
+                <div
+                  key={f.title}
+                  className="grid gap-1 border-b border-espresso/15 py-5 sm:grid-cols-[9rem_1fr] sm:gap-6"
+                >
+                  <dt className="accent font-display text-2xl leading-tight text-olive">
                     {f.title}
                   </dt>
-                  <dd className="mt-1 text-sm leading-relaxed text-muted">
+                  <dd className="text-base leading-relaxed text-espresso-soft sm:pt-1">
                     {f.text}
                   </dd>
                 </div>

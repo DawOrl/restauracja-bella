@@ -1,118 +1,106 @@
 /**
- * Statyczne importy zdjęć — Next.js automatycznie wylicza width/height
- * i generuje blurDataURL (placeholder="blur").
+ * Statyczne importy zdjęć: Next.js sam wylicza width/height i generuje
+ * blurDataURL (placeholder="blur").
  *
- * Źródło: Pexels (licencja darmowa, bez wymaganej atrybucji).
- * Pliki w `src/images/` (klimat/galeria) oraz `src/images/menu/` (pozycje menu).
+ * Jedna seria (fal.ai, nano-banana): ciepłe światło żarówek i świec, ciemny
+ * orzech, len, kremowa kamionka, lekkie ziarno filmu. Makaron 3D to render
+ * z Blendera (scripts/blender/pasta_still_life.py).
  */
 import type { StaticImageData } from "next/image";
 
-import hero from "@/images/hero.jpg";
-import about from "@/images/about.jpg";
+import hero from "@/images/hero.webp";
+import kuchniaMakaron from "@/images/kuchnia-makaron.webp";
+import makaron3d from "@/images/makaron-3d.webp";
 
-import dishPasta from "@/images/dish-pasta.jpg";
-import dishPizza from "@/images/dish-pizza.jpg";
+import menuAntipasti from "@/images/menu-antipasti.webp";
+import menuPasta from "@/images/menu-pasta.webp";
+import menuPizza from "@/images/menu-pizza.webp";
+import menuSecondi from "@/images/menu-secondi.webp";
+import menuDolci from "@/images/menu-dolci.webp";
+import menuBevande from "@/images/menu-bevande.webp";
 
-import gWineInterior from "@/images/g-wine-interior.jpg";
-import gTable from "@/images/g-table.jpg";
-import gBolognese from "@/images/g-bolognese.jpg";
-import gPizzaOven from "@/images/g-pizza-oven.jpg";
-import gBruschetta from "@/images/g-bruschetta.jpg";
-import gCharcuterie from "@/images/g-charcuterie.jpg";
-import gCannoli from "@/images/g-cannoli.jpg";
-import gRedwine from "@/images/g-redwine.jpg";
-import gAperol from "@/images/g-aperol.jpg";
-import gIngredients from "@/images/g-ingredients.jpg";
-import gDough from "@/images/g-dough.jpg";
-import gTiramisu from "@/images/g-tiramisu.jpg";
+import galeriaSala from "@/images/galeria-sala.webp";
+import galeriaPiec from "@/images/galeria-piec.webp";
+import galeriaKuchnia from "@/images/galeria-kuchnia.webp";
+import galeriaWino from "@/images/galeria-wino.webp";
+import galeriaSkladniki from "@/images/galeria-skladniki.webp";
+import galeriaDeser from "@/images/galeria-deser.webp";
 
-// --- Zdjęcia poszczególnych pozycji menu (klucz = MenuItem.id) ---
-import mBruschette from "@/images/menu/bruschette.jpg";
-import mBurrata from "@/images/menu/burrata.jpg";
-import mTagliere from "@/images/menu/tagliere.jpg";
-import mVitello from "@/images/menu/vitello.jpg";
-import mCaprese from "@/images/menu/caprese.jpg";
-import mCarbonara from "@/images/menu/carbonara.jpg";
-import mTagliatelleRagu from "@/images/menu/tagliatelle-ragu.jpg";
-import mCacioPepe from "@/images/menu/cacio-pepe.jpg";
-import mRavioli from "@/images/menu/ravioli.jpg";
-import mFrutti from "@/images/menu/frutti.jpg";
-import mMargherita from "@/images/menu/margherita.jpg";
-import mDiavola from "@/images/menu/diavola.jpg";
-import mQuattro from "@/images/menu/quattro.jpg";
-import mProsciutto from "@/images/menu/prosciutto.jpg";
-import mOrtolana from "@/images/menu/ortolana.jpg";
-import mOssobuco from "@/images/menu/ossobuco.jpg";
-import mBranzino from "@/images/menu/branzino.jpg";
-import mPollo from "@/images/menu/pollo.jpg";
-import mMelanzane from "@/images/menu/melanzane.jpg";
-import mTiramisu from "@/images/menu/tiramisu.jpg";
-import mPannacotta from "@/images/menu/pannacotta.jpg";
-import mCannoli from "@/images/menu/cannoli.jpg";
-import mGelato from "@/images/menu/gelato.jpg";
-import mVinoRosso from "@/images/menu/vino-rosso.jpg";
-import mChianti from "@/images/menu/chianti.jpg";
-import mAperol from "@/images/menu/aperol.jpg";
-import mNegroni from "@/images/menu/negroni.jpg";
-import mEspresso from "@/images/menu/espresso.jpg";
-import mAcqua from "@/images/menu/acqua.jpg";
+export type Photo = { src: StaticImageData; alt: string };
 
-export const heroImage: StaticImageData = hero;
-export const aboutImage: StaticImageData = about;
-
-/** Zdjęcia dań w menu — klucz odpowiada `MenuItem.id`. */
-export const menuImages: Record<string, StaticImageData> = {
-  bruschette: mBruschette,
-  burrata: mBurrata,
-  tagliere: mTagliere,
-  vitello: mVitello,
-  caprese: mCaprese,
-  carbonara: mCarbonara,
-  "tagliatelle-ragu": mTagliatelleRagu,
-  "cacio-pepe": mCacioPepe,
-  ravioli: mRavioli,
-  frutti: mFrutti,
-  margherita: mMargherita,
-  diavola: mDiavola,
-  quattro: mQuattro,
-  prosciutto: mProsciutto,
-  ortolana: mOrtolana,
-  ossobuco: mOssobuco,
-  branzino: mBranzino,
-  pollo: mPollo,
-  melanzane: mMelanzane,
-  tiramisu: mTiramisu,
-  pannacotta: mPannacotta,
-  cannoli: mCannoli,
-  gelato: mGelato,
-  "vino-rosso": mVinoRosso,
-  chianti: mChianti,
-  aperol: mAperol,
-  negroni: mNegroni,
-  espresso: mEspresso,
-  acqua: mAcqua,
+export const heroImage: Photo = {
+  src: hero,
+  alt: "Stolik nakryty na wieczór pod ceglanym sklepieniem: tagliatelle al ragù, focaccia z rozmarynem, oliwki, czerwone wino i świeca",
 };
 
-export type GalleryImage = { src: StaticImageData; alt: string };
+export const aboutImage: Photo = {
+  src: kuchniaMakaron,
+  alt: "Gniazda świeżo pokrojonego makaronu tagliatelle, wałek i kopczyk mąki z żółtkami na drewnianym blacie",
+};
 
-export const galleryImages: GalleryImage[] = [
-  { src: gWineInterior, alt: "Kieliszki wina w eleganckim wnętrzu trattorii" },
-  { src: gBolognese, alt: "Spaghetti bolognese z natką pietruszki" },
-  { src: gPizzaOven, alt: "Pizza margherita w piecu opalanym drewnem" },
-  { src: gTable, alt: "Pięknie nakryty stół ze świecami" },
-  { src: gBruschetta, alt: "Bruschetta z pomidorami, oliwkami i bazylią" },
-  { src: gTiramisu, alt: "Klasyczne tiramisù posypane kakao" },
-  { src: gCharcuterie, alt: "Deska włoskich wędlin i serów" },
-  { src: gRedwine, alt: "Kieliszek czerwonego wina przy stoliku" },
-  { src: gDough, alt: "Wyrabianie świeżego ciasta na makaron" },
-  { src: gCannoli, alt: "Sycylijskie cannoli z kremem ricotta" },
-  { src: gAperol, alt: "Aperol Spritz — włoskie aperitivo" },
-  { src: gIngredients, alt: "Pomidory i oliwa z oliwek — świeże składniki" },
+/** Martwa natura z makaronu (render 3D), dekoracja nagłówka karty. */
+export const pastaRender: StaticImageData = makaron3d;
+
+/** Jedno zdjęcie na kategorię karty (klucz = `MenuCategory.id`). */
+export const menuCategoryImages: Record<string, Photo> = {
+  antipasti: {
+    src: menuAntipasti,
+    alt: "Burrata z pomidorami, bazylią i oliwą, obok grzanki z chleba na zakwasie",
+  },
+  pasta: {
+    src: menuPasta,
+    alt: "Spaghetti alla carbonara z chrupiącym guanciale i świeżo mielonym pieprzem",
+  },
+  pizza: {
+    src: menuPizza,
+    alt: "Pizza margherita z pieca opalanego drewnem na drewnianej desce",
+  },
+  secondi: {
+    src: menuSecondi,
+    alt: "Ossobuco na szafranowym risotto z gremolatą",
+  },
+  dolci: {
+    src: menuDolci,
+    alt: "Porcja tiramisù posypana kakao, w tle filiżanka espresso",
+  },
+  bevande: {
+    src: menuBevande,
+    alt: "Karafka czerwonego wina domowego, kieliszek wina i negroni z oliwkami",
+  },
+};
+
+/** Galeria: kolejność = kolejność w siatce i w podglądzie. */
+export const galleryImages: Photo[] = [
+  {
+    src: galeriaSala,
+    alt: "Sala pod ceglanym sklepieniem wieczorem, nakryte stoliki i świece",
+  },
+  {
+    src: galeriaPiec,
+    alt: "Pizza w piecu opalanym drewnem, w głębi płonące polana",
+  },
+  {
+    src: galeriaKuchnia,
+    alt: "Ragù na kuchence, miedziane rondle i stos talerzy",
+  },
+  {
+    src: galeriaWino,
+    alt: "Butelki wina w drewnianym regale wpuszczonym w ceglaną ścianę, przed nimi świeca",
+  },
+  {
+    src: galeriaSkladniki,
+    alt: "Pomidory San Marzano, bazylia, czosnek, oliwa i kawałek parmezanu na lnianej ściereczce",
+  },
+  {
+    src: galeriaDeser,
+    alt: "Espresso, dwa cannoli z pistacjami i kieliszek limoncello na koniec kolacji",
+  },
 ];
 
 /** Zdjęcia do danych strukturalnych / SEO (kolejność = priorytet). */
-export const seoImages: GalleryImage[] = [
-  { src: hero, alt: "Wnętrze trattorii Bella Cucina" },
-  { src: dishPasta, alt: "Świeży makaron" },
-  { src: dishPizza, alt: "Pizza z pieca opalanego drewnem" },
+export const seoImages: StaticImageData[] = [
+  hero,
+  menuPasta,
+  menuPizza,
+  galeriaSala,
 ];

@@ -1,114 +1,106 @@
 import { Reveal } from "@/components/ui/Reveal";
+import { HoursList } from "@/components/HoursList";
+import { MapCard } from "@/components/MapCard";
 import { restaurant } from "@/data/restaurant";
 
 export function Contact() {
+  const { address, contact, social, map } = restaurant;
   return (
-    <section id="kontakt" className="bg-cream py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal className="text-center">
-          <p className="eyebrow eyebrow--center justify-center">Kontakt</p>
-          <h2 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl">
-            Jak do nas trafić
+    <section id="kontakt" className="relative py-24 sm:py-32">
+      <div className="mx-auto grid max-w-[90rem] gap-12 px-5 sm:px-8 lg:grid-cols-12 lg:gap-10 lg:px-12 xl:px-20">
+        <Reveal className="lg:col-span-5">
+          <p className="kicker">Dove siamo</p>
+          <h2 className="mt-4 font-display text-[2.6rem] leading-[1.02] text-espresso sm:text-6xl">
+            Jak do nas <span className="accent text-terracotta">trafić</span>
           </h2>
+
+          <address className="mt-10 not-italic">
+            <p className="font-display text-3xl leading-tight text-espresso sm:text-4xl">
+              {address.street.replace("ul. ", "")}
+            </p>
+            <p className="mt-1 text-lg text-espresso-soft">
+              {address.postalCode} {address.city}, Stare Miasto
+            </p>
+            <p className="mt-4 max-w-sm text-base leading-relaxed text-espresso-soft">
+              Ulica Floriańska prowadzi od Rynku Głównego do Bramy Floriańskiej.
+              Z Rynku dojdziesz w kilka minut.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={map.directionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center rounded-full bg-espresso px-5 text-sm font-semibold text-cream transition-colors hover:bg-espresso-soft"
+              >
+                Wyznacz trasę
+              </a>
+              <a
+                href={map.linkUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center rounded-full border border-espresso/25 px-5 text-sm font-semibold text-espresso transition-colors hover:border-espresso"
+              >
+                Otwórz w Mapach Google
+              </a>
+            </div>
+          </address>
+
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
+            <div>
+              <h3 className="font-display text-xl text-espresso">
+                Godziny otwarcia
+              </h3>
+              <div className="mt-4 text-base">
+                <HoursList />
+              </div>
+            </div>
+            <div>
+              <h3 className="font-display text-xl text-espresso">Kontakt</h3>
+              <ul className="mt-2 text-base">
+                <li>
+                  <a
+                    href={`tel:${contact.phoneHref}`}
+                    className="inline-flex min-h-11 items-center tabular-nums text-espresso underline decoration-espresso/25 underline-offset-4 hover:decoration-terracotta"
+                  >
+                    {contact.phone}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="inline-flex min-h-11 items-center break-all text-espresso underline decoration-espresso/25 underline-offset-4 hover:decoration-terracotta"
+                  >
+                    {contact.email}
+                  </a>
+                </li>
+                <li className="flex gap-6">
+                  <a
+                    href={social.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center text-espresso-soft hover:text-terracotta"
+                  >
+                    Instagram
+                  </a>
+                  <a
+                    href={social.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center text-espresso-soft hover:text-terracotta"
+                  >
+                    Facebook
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </Reveal>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-5 lg:gap-12">
-          {/* Informacje */}
-          <Reveal className="lg:col-span-2">
-            <div className="space-y-8">
-              <div>
-                <h3 className="font-display text-2xl text-espresso">Adres</h3>
-                <p className="mt-2 text-base leading-relaxed text-espresso-soft">
-                  {restaurant.address.street}
-                  <br />
-                  {restaurant.address.postalCode} {restaurant.address.city}
-                </p>
-                <a
-                  href={restaurant.map.linkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-2 inline-block text-sm font-semibold text-terracotta underline-offset-4 hover:underline"
-                >
-                  Otwórz w Mapach Google →
-                </a>
-              </div>
-
-              <div>
-                <h3 className="font-display text-2xl text-espresso">
-                  Godziny otwarcia
-                </h3>
-                <ul className="mt-3 space-y-2 text-base text-espresso-soft">
-                  {restaurant.hours.map((h) => (
-                    <li
-                      key={h.label}
-                      className="flex justify-between gap-6 border-b border-espresso/10 pb-2"
-                    >
-                      <span>{h.label}</span>
-                      <span className="font-medium tabular-nums text-espresso">
-                        {h.opens} – {h.closes}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-display text-2xl text-espresso">Kontakt</h3>
-                <div className="mt-3 space-y-2 text-base text-espresso-soft">
-                  <p>
-                    <a
-                      href={`tel:${restaurant.contact.phoneHref}`}
-                      className="transition-colors hover:text-terracotta"
-                    >
-                      {restaurant.contact.phone}
-                    </a>
-                  </p>
-                  <p>
-                    <a
-                      href={`mailto:${restaurant.contact.email}`}
-                      className="transition-colors hover:text-terracotta"
-                    >
-                      {restaurant.contact.email}
-                    </a>
-                  </p>
-                  <div className="flex gap-4 pt-1">
-                    <a
-                      href={restaurant.social.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-terracotta hover:underline"
-                    >
-                      Instagram
-                    </a>
-                    <a
-                      href={restaurant.social.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-terracotta hover:underline"
-                    >
-                      Facebook
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Mapa */}
-          <Reveal className="lg:col-span-3" delay={0.1}>
-            <div className="h-80 overflow-hidden rounded-2xl shadow-lg ring-1 ring-espresso/10 sm:h-full sm:min-h-[28rem]">
-              <iframe
-                src={restaurant.map.embedUrl}
-                title={`Mapa — ${restaurant.name}, ${restaurant.address.street}`}
-                width="100%"
-                height="100%"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-full w-full border-0"
-              />
-            </div>
-          </Reveal>
-        </div>
+        <Reveal className="lg:col-span-7" delay={0.1}>
+          <div className="relative h-[30rem] overflow-hidden rounded-[0.75rem] border border-espresso/10 bg-cream-deep sm:h-[36rem] lg:h-full lg:min-h-[40rem]">
+            <MapCard />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

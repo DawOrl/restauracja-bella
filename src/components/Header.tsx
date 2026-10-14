@@ -8,7 +8,7 @@ const links = [
   { href: "#o-nas", label: "O nas" },
   { href: "#menu", label: "Menu" },
   { href: "#galeria", label: "Galeria" },
-  { href: "#kontakt", label: "Kontakt" },
+  { href: "#kontakt", label: "Dojazd" },
 ];
 
 export function Header() {
@@ -16,95 +16,80 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Blokuj scroll tła, gdy otwarte menu mobilne
+  // Menu mobilne: blokada przewijania tła i zamykanie klawiszem Escape
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+        "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300",
         scrolled || open
-          ? "bg-cream/95 shadow-[0_1px_0_rgba(33,23,18,0.08)] backdrop-blur-md"
-          : "bg-transparent"
+          ? "bg-cream/95 shadow-[0_1px_0_rgba(33,23,18,0.1)] backdrop-blur-md"
+          : "bg-transparent",
       )}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
-        {/* Logo */}
+      <div className="mx-auto flex h-(--header-h) max-w-[90rem] items-center justify-between px-5 sm:px-8 lg:px-12">
         <a
           href="#top"
           onClick={() => setOpen(false)}
-          className={cn(
-            "font-display text-2xl tracking-tight transition-colors sm:text-[1.7rem]",
-            scrolled || open ? "text-espresso" : "text-cream"
-          )}
-          aria-label={`${restaurant.name} — strona główna`}
+          className="relative z-50 font-display text-[1.6rem] leading-none tracking-tight text-espresso"
+          aria-label={`${restaurant.name}: na górę strony`}
         >
-          Bella <span className="italic text-terracotta">Cucina</span>
+          Bella <span className="accent text-terracotta">Cucina</span>
         </a>
 
-        {/* Nawigacja desktop */}
-        <nav className="hidden items-center gap-9 lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Główna">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className={cn(
-                "group relative text-sm font-medium tracking-wide transition-colors",
-                scrolled
-                  ? "text-espresso-soft hover:text-terracotta"
-                  : "text-cream/90 hover:text-cream"
-              )}
+              className="group relative py-2 text-[0.95rem] text-espresso-soft transition-colors hover:text-espresso"
             >
               {l.label}
-              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-terracotta transition-all duration-300 group-hover:w-full" />
+              <span className="absolute inset-x-0 bottom-1 h-px origin-left scale-x-0 bg-terracotta transition-transform duration-300 ease-out-soft group-hover:scale-x-100" />
             </a>
           ))}
           <a
             href="#rezerwacja"
-            className="rounded-full bg-terracotta px-6 py-2.5 text-sm font-semibold text-cream shadow-sm transition-all duration-300 hover:bg-terracotta-dark hover:shadow-md"
+            className="rounded-full bg-terracotta px-5 py-2.5 text-sm font-semibold text-cream transition-colors duration-200 hover:bg-terracotta-dark active:translate-y-px"
           >
             Zarezerwuj stolik
           </a>
         </nav>
 
-        {/* Hamburger mobile */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className={cn(
-            "relative z-50 flex h-11 w-11 flex-col items-center justify-center gap-[5px] lg:hidden",
-            scrolled || open ? "text-espresso" : "text-cream"
-          )}
+          className="relative z-50 -mr-2 flex h-11 w-11 flex-col items-center justify-center gap-[6px] text-espresso lg:hidden"
           aria-label={open ? "Zamknij menu" : "Otwórz menu"}
           aria-expanded={open}
+          aria-controls="menu-mobilne"
         >
           <span
             className={cn(
-              "block h-0.5 w-6 bg-current transition-all duration-300",
-              open && "translate-y-[7px] rotate-45"
+              "block h-[1.5px] w-6 bg-current transition-transform duration-300",
+              open && "translate-y-[3.75px] rotate-45",
             )}
           />
           <span
             className={cn(
-              "block h-0.5 w-6 bg-current transition-all duration-300",
-              open && "opacity-0"
-            )}
-          />
-          <span
-            className={cn(
-              "block h-0.5 w-6 bg-current transition-all duration-300",
-              open && "-translate-y-[7px] -rotate-45"
+              "block h-[1.5px] w-6 bg-current transition-transform duration-300",
+              open && "-translate-y-[3.75px] -rotate-45",
             )}
           />
         </button>
@@ -112,36 +97,43 @@ export function Header() {
 
       {/* Panel mobilny */}
       <div
+        id="menu-mobilne"
         className={cn(
-          "fixed inset-0 top-0 z-40 flex flex-col items-center justify-center gap-8 bg-cream transition-all duration-400 lg:hidden",
-          open
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
+          "fixed inset-0 z-40 flex flex-col bg-cream bg-grain px-5 pb-10 pt-[calc(var(--header-h)+2rem)] transition-opacity duration-300 sm:px-8 lg:hidden",
+          open ? "opacity-100" : "pointer-events-none invisible opacity-0",
         )}
       >
-        {links.map((l) => (
+        <nav className="flex flex-col" aria-label="Menu mobilne">
+          {links.map((l, i) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="flex items-baseline border-b border-espresso/10 py-4 font-display text-[2rem] leading-tight text-espresso"
+            >
+              <span className="mr-4 w-6 font-sans text-sm tabular-nums text-muted">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+        <div className="mt-auto flex flex-col gap-3">
           <a
-            key={l.href}
-            href={l.href}
+            href="#rezerwacja"
             onClick={() => setOpen(false)}
-            className="font-display text-3xl text-espresso transition-colors hover:text-terracotta"
+            className="rounded-full bg-terracotta px-8 py-4 text-center text-base font-semibold text-cream"
           >
-            {l.label}
+            Zarezerwuj stolik
           </a>
-        ))}
-        <a
-          href="#rezerwacja"
-          onClick={() => setOpen(false)}
-          className="mt-4 rounded-full bg-terracotta px-8 py-3.5 text-base font-semibold text-cream"
-        >
-          Zarezerwuj stolik
-        </a>
-        <a
-          href={`tel:${restaurant.contact.phoneHref}`}
-          className="text-sm font-medium tracking-wide text-muted"
-        >
-          {restaurant.contact.phone}
-        </a>
+          <a
+            href={`tel:${restaurant.contact.phoneHref}`}
+            className="py-3 text-center text-base font-medium text-espresso-soft"
+          >
+            albo zadzwoń:{" "}
+            <span className="tabular-nums">{restaurant.contact.phone}</span>
+          </a>
+        </div>
       </div>
     </header>
   );
