@@ -38,7 +38,10 @@ export function MenuNav({ categories }: { categories: Cat[] }) {
     const link = nav?.querySelector<HTMLElement>(`[data-cat="${active}"]`);
     if (!nav || !link) return;
     const left = link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2;
-    nav.scrollTo({ left, behavior: "smooth" });
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    nav.scrollTo({ left, behavior: reduce ? "auto" : "smooth" });
   }, [active]);
 
   return (

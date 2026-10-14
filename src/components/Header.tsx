@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import { isolate, lockScroll } from "@/lib/modal";
 import { restaurant } from "@/data/restaurant";
 
 const links = [
@@ -14,6 +15,7 @@ const links = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -22,20 +24,29 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Menu mobilne: blokada przewijania tła i zamykanie klawiszem Escape
+  // Menu mobilne: blokada przewijania tła, reszta strony `inert` (fokus nie
+  // ucieka pod panel), Escape zamyka, a przejście na desktop też zamyka
   useEffect(() => {
-    if (!open) return;
-    document.body.style.overflow = "hidden";
+    const header = headerRef.current;
+    if (!open || !header) return;
+    const unlock = lockScroll();
+    const restore = isolate(header);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onDesktop = () => desktop.matches && setOpen(false);
     document.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onDesktop);
     return () => {
-      document.body.style.overflow = "";
+      restore();
+      unlock();
       document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onDesktop);
     };
   }, [open]);
 
   return (
     <header
+      ref={headerRef}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300",
         scrolled || open
